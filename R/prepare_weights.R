@@ -6,6 +6,11 @@
 #' @param nu,om numeric values specifying aggregate reserve weights, nu and omega.
 #' @param eta.j a numeric vector specifying standalone cybersecurity investment weights.
 #' @param eta a numeric value specifying aggregate cybersecurity investment weights.
+#'
+#' @return a list of weights tables
+#' * `nu_om_ik`: weights on reserves (\eqn{\nu_{ik}}) and reserve-loss mismatches (\eqn{\omega_{ik}}) on individual threat-asset pairs.
+#' * `nu_om`: weights on aggregate reserve (\eqn{\nu}) and aggregate reserve-loss mismatch (\eqn{\omega})
+#' * `etas`: weights on cybersecurity investments, including standalone investments on individual controls and the aggregate investment.
 #' @export createWeightsTables
 
 createWeightsTables <- function(cyra.params, nu.ik, om.ik, eta.j, nu, om, eta) {

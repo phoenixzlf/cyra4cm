@@ -9,6 +9,16 @@ scaleLogNormal(th, meanlog, sdlog)
 
 scaleWeibull(th, shape, scale)
 }
+\arguments{
+\item{th}{a numeric value representing the scaling factor.}
+
+\item{meanlog, sdlog}{numeric values, which are parameters of a lognormal distribution before scaling.}
+
+\item{shape, scale}{numeric values, which are parameters of a Weibull distribution before scaling.}
+}
+\value{
+a name vector of new parameters.
+}
 \description{
 Here are two built-in functions for scaling lognormal-distributed and Weibull-distributed random variables.
 }

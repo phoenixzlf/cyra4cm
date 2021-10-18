@@ -3,6 +3,8 @@
 #' @param q a numeric vector of quantiles, for which the discretized probabilites are calculated
 #' @param pdist a character value, indicating the name of the continuous distribution, e.g., "lnorm", "weibull", etc.
 #' @param ... a named numeric vector of parameters of the distribution.
+#'
+#' @return a numeric vector of probabilities that corresponds to the input quantiles `q`.
 #' @export
 
 generateDiscretizedProbs <- function(q, pdist, ...) {

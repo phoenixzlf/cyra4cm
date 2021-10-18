@@ -13,6 +13,9 @@ generateDiscretizedProbs(q, pdist, ...)
 
 \item{...}{a named numeric vector of parameters of the distribution.}
 }
+\value{
+a numeric vector of probabilities that corresponds to the input quantiles \code{q}.
+}
 \description{
 This function discretizes a continuous distribution by allocating the probability within each interval to the beginning of that interval
 }

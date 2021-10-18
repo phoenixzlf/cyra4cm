@@ -26,6 +26,14 @@ createNuOmegaTable(nu, om)
 
 \item{l, m, n}{integer values. l: number of threats; m: number of vulnerabilities; n: number of assets.}
 }
+\value{
+a list of weights tables
+\itemize{
+\item \code{nu_om_ik}: weights on reserves (\eqn{\nu_{ik}}) and reserve-loss mismatches (\eqn{\omega_{ik}}) on individual threat-asset pairs.
+\item \code{nu_om}: weights on aggregate reserve (\eqn{\nu}) and aggregate reserve-loss mismatch (\eqn{\omega})
+\item \code{etas}: weights on cybersecurity investments, including standalone investments on individual controls and the aggregate investment.
+}
+}
 \description{
 This function can be used to format the user-provided weights into data.frames that are compatible with the risk assessment and capital allocation framework.
 }

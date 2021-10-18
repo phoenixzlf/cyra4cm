@@ -1,5 +1,10 @@
 #' @title Scale a Random Variable
 #' @description Here are two built-in functions for scaling lognormal-distributed and Weibull-distributed random variables.
+#' @param th a numeric value representing the scaling factor.
+#' @param meanlog,sdlog numeric values, which are parameters of a lognormal distribution before scaling.
+#' @param shape,scale numeric values, which are parameters of a Weibull distribution before scaling.
+#' @return a name vector of new parameters.
+#'
 #' @export scaleWeibull
 #' @export scaleLogNormal
 
