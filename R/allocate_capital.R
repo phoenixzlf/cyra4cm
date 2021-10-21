@@ -82,18 +82,18 @@ calcPenaltyValue <- function(x, p, q) {
 }
 
 # E[Xh(X)]
-calcConditionalExpection <- function(x, p, q) {
-  tail_idx <- which(q > x)
-  e <- sum(p[tail_idx] * q[tail_idx]) / (1 - sum(p[q <= x]))
-  if (is.nan(e)) e <- 0
-  return(e)
-}
+# calcConditionalExpection <- function(x, p, q) {
+#   tail_idx <- which(q > x)
+#   e <- sum(p[tail_idx] * q[tail_idx]) / (1 - sum(p[q <= x]))
+#   if (is.nan(e)) e <- 0
+#   return(e)
+# }
 
-calcVaR <- function(alpha, mass_vec, q) {
-  return(
-    c(0, q)[which(cumsum(mass_vec) >= alpha)][1]
-  )
-}
+# calcVaR <- function(alpha, mass_vec, q) {
+#   return(
+#     c(0, q)[which(cumsum(mass_vec) >= alpha)][1]
+#   )
+# }
 
 # calculate standalone optimal Kik
 calcStandaloneKik <- function(penalty.thres, q, sik_mass_table, nu_om_ik, lambda_ik) {
@@ -103,7 +103,7 @@ calcStandaloneKik <- function(penalty.thres, q, sik_mass_table, nu_om_ik, lambda
   Kik["Kik"] <- NA
   for (r in 1:nrow(Kik)) {
     p <- unlist(sik_mass_table[r, paste0("p", c(0, q))])
-    VaR <- calcVaR(alpha = penalty.thres, mass_vec = p, q = q)
+    VaR <- calcVaR(alpha = penalty.thres, p = p, q = q)
     aik <- calcConditionalExpection(VaR, p, c(0, q))
     nuik <- Kik[r, "nu"]
     omik <- Kik[r, "om"]
@@ -114,7 +114,7 @@ calcStandaloneKik <- function(penalty.thres, q, sik_mass_table, nu_om_ik, lambda
 
 # calculate optimal aggregate K
 calcAggregateK <- function(penalty.thres, q, s_mass, nu_om) {
-  b <- calcConditionalExpection(calcVaR(alpha = penalty.thres, mass_vec = unlist(s_mass), q = q), s_mass, c(0, q))
+  b <- calcConditionalExpection(calcVaR(alpha = penalty.thres, p = unlist(s_mass), q = q), s_mass, c(0, q))
   K <- b - nu_om$nu / (2 * nu_om$om)
   return(K)
 }
@@ -143,14 +143,14 @@ calcObjValue <- function(penalty.thres, q, Kik_holistic, M, nu_om, nu_om_ik, eta
   nu_om_ik["E"] <- 0
   for (r in 1:nrow(sik_mass)) {
     p <- sik_mass[r, paste0("p", c(0, q))]
-    h <- calcPenaltyValue(calcVaR(alpha = penalty.thres, mass_vec = unlist(p), q = q), p, c(0, q))
+    h <- calcPenaltyValue(calcVaR(alpha = penalty.thres, p = unlist(p), q = q), p, c(0, q))
     quad <- (c(0, q) - Kik_holistic$Kik[which(Kik_holistic$i == sik_mass$i[r] & Kik_holistic$k == sik_mass$k[r])])^2
     e <- sum(p * h * quad)
     nu_om_ik[which(nu_om_ik$i == sik_mass$i[r] & nu_om_ik$k == sik_mass$k[r]), "E"] <- e
   }
   part3 <- sum(nu_om_ik$om * nu_om_ik$E)
   p <- unlist(s_mass)
-  h <- calcPenaltyValue(calcVaR(alpha = penalty.thres, mass_vec = p, q = q), p, c(0, q))
+  h <- calcPenaltyValue(calcVaR(alpha = penalty.thres, p = p, q = q), p, c(0, q))
   quad <- (c(0, q) - sum(Kik_holistic$Kik))^2
   part3 <- part3 + nu_om["om"]*sum(p * h * quad)
   return(
