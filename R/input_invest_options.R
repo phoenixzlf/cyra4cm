@@ -5,6 +5,7 @@
 #' @export createInvestTable
 #' @export cyraInvestOptions
 #' @export cyraInvestOption
+#' @export extractFromInvestTable
 
 createInvestTable <- function(inv.opt){
   if (class(inv.opt) != "cyraInvestOptions") stop("inv.opt must be of class cyraInvestOptions")
@@ -39,6 +40,11 @@ cyraInvestOption <- function(idx, invest, theta){
   class(option) <- "cyraInvestOption"
   return(option)
 }
+
+#' @describeIn createInvestTable this is a helper function that extracts `invest` or `theta` information from a `cyraInvestTable` object (see [createInvestTable()]).
+#' @param invest.table a `cyraInvestTable` object.
+#' @param field a character value, of which the value is either `invest` or `theta`
+
 
 extractFromInvestTable <- function(invest.table, field){
   th_table <- data.frame()
